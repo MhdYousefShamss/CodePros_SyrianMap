@@ -8,6 +8,9 @@
 			//Remember To Provide a Style for a Cluterer
 			//Cuz it Needs a VPN Connection to get the default.
 			this.markerClusterer = new MarkerClusterer(this.gMap , []);
+			if(mapOption.geocoder){
+				this.geocoder = new google.maps.Geocoder();
+			}
 		}
 		Codepros.prototype={
 			Zoom:function(zoomLevel){
@@ -81,6 +84,17 @@
 					this.markers.splice(indexOf,1);
 					marker.setMap(null);
 				}
+			},
+			Geocode:function(geoCoderOptions){
+				this.geocoder.geocode({
+					address : geoCoderOptions.address,
+				},function(results,status){
+					if(status === google.maps.GeocoderStatus.OK){
+						console.log(results)
+					} else {
+						console.error(status);
+					}
+				})
 			},
 			FindBy:function(callback){
 				return this.markers.find(callback);
