@@ -89,6 +89,9 @@
 				directionsDisplay = new google.maps.DirectionsRenderer(),
 				bounds = new google.maps.LatLngBounds();
 				directionsDisplay.setMap(this.gMap);
+				if(directionOption.panel){
+					directionsDisplay.setPanel(document.getElementById(directionOption.panel));
+				}
 				bounds.extend(directionOption.start);
 				bounds.extend(directionOption.end);
 				this.gMap.fitBounds(bounds);
