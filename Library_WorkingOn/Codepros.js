@@ -75,6 +75,36 @@
 					this.markers.splice(indexOf,1);
 					marker.setMap(null);
 				}
+			},
+			GetDirections:function(directionOption){
+				switch(directionOption.travelMode){
+					case 'driving':
+					directionOption.travelMode = google.maps.TravelMode.DRIVING;
+					break;
+					default:
+					directionOption.travelMode= google.maps.TravelMode.WALKING;
+					break;
+				}
+				var directionsService = new google.maps.DirectionsService(),
+				directionsDisplay = new google.maps.DirectionsRenderer(),
+				bounds = new google.maps.LatLngBounds();
+				directionsDisplay.setMap(this.gMap);
+				bounds.extend(directionOption.start);
+				bounds.extend(directionOption.end);
+				this.gMap.fitBounds(bounds);
+				var request = {
+					origin : directionOption.start,
+					destination : directionOption.end,
+					travelMode : directionOption.travelMode
+				};
+				directionsService.route(request,function(response,status){
+					if(status == google.maps.DirectionsStatus.OK){
+						directionsDisplay.setDirections(response);
+						directionsDisplay.setMap(this.gMap);
+					} else {
+						alert("not OK");
+					}
+				});
 			}
 		};
 		return Codepros;
