@@ -41,5 +41,4 @@
 		return new list(params);
 	}
 	window.list=list;
-
 })(window);

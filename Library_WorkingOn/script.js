@@ -20,12 +20,13 @@
 		}*/
 		//icon:'http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-128e4d/shapecolor-color/shadow-1/border-dark/symbolstyle-white/symbolshadowstyle-dark/gradient-no/moose.png'
 	});
-	myMap.AddInfoWindow("<div style='color:red;'>Hello</div>",myMap.CreateMarker({
-		lat:33,
-		lng:32,
-		id:1
-	}));
-	myMap.RemoveBy(function(marker){
-		return marker.id===2;
-	})
+	for (var i = 20; i >= 0; i--) {
+		myMap.CreateMarker({
+			lat:33.123234 + Math.random(),
+			lng:32.123443 + Math.random(),
+			id:2,
+			content:'2'
+		});
+	};
+	
 })(window,window.Codepros)

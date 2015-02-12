@@ -5,6 +5,9 @@
 		function Codepros(element,mapOption){
 			this.gMap = new google.maps.Map(element,mapOption);
 			this.markers=list.Create();
+			//Remember To Provide a Style for a Cluterer
+			//Cuz it Needs a VPN Connection to get the default.
+			this.markerClusterer = new MarkerClusterer(this.gMap , []);
 		}
 		Codepros.prototype={
 			Zoom:function(zoomLevel){
@@ -32,6 +35,9 @@
 				};
 				marker = this._AddMarker(options);
 				this.markers.add(marker);
+				if(this.markerClusterer){
+				this.markerClusterer.addMarker(marker);	
+				}
 				if(options.event){
 					this._on({
 						obj:marker,
@@ -49,7 +55,7 @@
 							});
 							infoWindow.open(this.gMap,marker);
 						}
-					});
+					})
 				}
 				return marker;
 			},
@@ -57,7 +63,7 @@
 				options.map=this.gMap;
 				return new google.maps.Marker(options);
 			},
-			AddInfoWindow:function(content,marker){
+			/*AddInfoWindow:function(content,marker){
 				this._on({
 					obj:marker,
 					event:'click',
@@ -68,7 +74,7 @@
 						infoWindow.open(this.gMap,marker);
 					}
 				})
-			},
+			},*/
 			RemoveMarker:function(marker){
 				var indexOf=this.markers.indexOf(marker);
 				if(indexOf!=-1){
@@ -80,9 +86,14 @@
 				return this.markers.find(callback);
 			},
 			RemoveBy:function(callback,action){
-				return this.markers.find(callback,function(markers){
+				var self = this;
+				return self.markers.find(callback,function(markers){
 					markers.forEach(function(marker){
-						marker.setMap(null);
+						if(self.markerClusterer){
+							self.markerClusterer.removeMarker(marker);
+						} else {
+							marker.setMap(null);							
+						}
 					});
 				})
 			},
