@@ -14,24 +14,8 @@
 					this.items.splice(indexOf, 1);
 				}
 			},
-			find:function(callback,action){
-				var callbackReturn,
-					items = this.items,
-					length = this.items.length,
-					matches = [],
-					i = 0;
+			find:function(item){
 
-				for( ; i<length ;i++){
-					callbackReturn = callback(items[i] , i);
-					if(callbackReturn){
-						matches.push(items[i]);
-					} 
-				}
-				if(action){
-					action.call(this,matches);
-				}
-
-				return matches; 
 			}
 		};
 		return list;

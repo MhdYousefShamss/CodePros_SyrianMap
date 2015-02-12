@@ -76,16 +76,6 @@
 					marker.setMap(null);
 				}
 			},
-			FindBy:function(callback){
-				return this.markers.find(callback);
-			},
-			RemoveBy:function(callback,action){
-				return this.markers.find(callback,function(markers){
-					markers.forEach(function(marker){
-						marker.setMap(null);
-					});
-				})
-			},
 			GetDirections:function(directionOption){
 				switch(directionOption.travelMode){
 					case 'driving':
@@ -96,9 +86,9 @@
 					break;
 				}
 				var directionsService = new google.maps.DirectionsService(),
-					directionsDisplay = new google.maps.DirectionsRenderer(),
-					bounds = new google.maps.LatLngBounds();
-					directionsDisplay.setMap(this.gMap);
+				directionsDisplay = new google.maps.DirectionsRenderer(),
+				bounds = new google.maps.LatLngBounds();
+				directionsDisplay.setMap(this.gMap);
 				if(directionOption.panel){
 					directionsDisplay.setPanel(document.getElementById(directionOption.panel));
 				}

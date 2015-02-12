@@ -9,7 +9,6 @@
 	var marker = myMap.CreateMarker({
 		lat:33,
 		lng:33,
-		id:2,
 		draggable:true,
 		content:"Hello"
 		/*event:{
@@ -22,10 +21,7 @@
 	});
 	myMap.AddInfoWindow("<div style='color:red;'>Hello</div>",myMap.CreateMarker({
 		lat:33,
-		lng:32,
-		id:1
+		lng:32
 	}));
-	myMap.RemoveBy(function(marker){
-		return marker.id===2;
-	})
+	console.log(myMap.markers);
 })(window,window.Codepros)
