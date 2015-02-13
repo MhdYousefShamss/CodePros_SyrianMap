@@ -26,7 +26,9 @@
 		lng:32,
 		id:1
 	}));*/
-	myMap.Geocode({
-		address:"damascus"
+	var marker2=myMap.CreateMarker({
+		lat:33,
+		lng:32,
+		id:1
 	});
 })(window,window.Codepros)

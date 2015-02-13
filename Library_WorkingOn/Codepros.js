@@ -32,6 +32,32 @@
 			},
 			CreateMarker:function(options){
 				var marker;
+				//Error While Calling Need To Fix
+				//Pass it to jQueryUI
+				/*if(options.location){
+					this.Geocode({
+						address:options.location,
+						success:function(results){
+							results.forEach(function(result){
+								options.position={
+									lat : result.geometry.location.lat(),
+									lng : result.geometry.location.lng()
+								}
+								marker = this._AddMarker(options);
+							})
+							alert("Done");
+						},
+						error:function(status){
+							console.error(status);
+						}
+					});
+				} else {
+					options.position={
+					lat:options.lat,
+					lng:options.lng
+					};
+					marker = this._AddMarker(options);
+				}*/
 				options.position={
 					lat:options.lat,
 					lng:options.lng
@@ -39,7 +65,7 @@
 				marker = this._AddMarker(options);
 				this.markers.add(marker);
 				if(this.markerClusterer){
-				this.markerClusterer.addMarker(marker);	
+					this.markerClusterer.addMarker(marker);	
 				}
 				if(options.event){
 					this._on({
@@ -90,9 +116,9 @@
 					address : geoCoderOptions.address,
 				},function(results,status){
 					if(status === google.maps.GeocoderStatus.OK){
-						console.log(results)
+						geoCoderOptions.success.call(this,results,status);
 					} else {
-						console.error(status);
+						geoCoderOptions.error.call(this,status);
 					}
 				})
 			},
