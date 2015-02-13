@@ -1,80 +1,67 @@
 (function(window,Codepros){
-
+      //namespace.widgetName
 	$.widget( "codepros.codepros", {
       // default options
       options: { },
  
       // the constructor
       _create: function() {
-        console.log(1);
+        var element = this.element[0],
+            options = this.options;
+        this.map = Codepros.CreateNew(element,options);
       },
  
       // called when created, and later when changing options
       _refresh: function() {
         
       },
- 
-      // a public method to change the color to a random value
-      // can be called directly via .colorize( "random" )
-      addMarker: function( opts ) {
-        alert("Created");
+      Zoom: function(zoomLevel){
+        return this.map.Zoom(zoomLevel);
       },
- 
-      // events bound via _on are removed automatically
-      // revert other modifications here
+      getAllMarkers: function(){
+        return this.map.markers.items;
+      },
+      addMarker: function( opts ) {
+        var self = this;
+        console.log()
+        if(opts.location){
+          this.map.Geocode({
+            address : opts.location,
+            success:function(results){
+              results.forEach(function(result){
+                opts.lat = result.geometry.location.lat();
+                opts.lng = result.geometry.location.lng();
+                self.map.CreateMarker(opts);
+                console.log(this.geocoder);
+              });
+            },
+            error: function(status){
+              console.error(status);
+            }
+          })
+        } else {
+          return this.map.CreateMarker(opts);  
+        }
+      },
+      findMarkers: function( callback ){
+        return this.map.FindBy(callback);
+      },
+
+      removeMarkers: function( callback ){
+        this.map.RemoveBy( callback );
+      },
       _destroy: function() {
         
       },
  
-      // _setOptions is called with a hash of all options that are changing
-      // always refresh when changing options
       _setOptions: function() {
-        // _super and _superApply handle keeping the right this-context
+      
       
       },
  
-      // _setOption is called for each individual option that is changing
       _setOption: function( key, value ) {
-        // prevent invalid color values
-      
-    });
- 
-    // initialize with default options
-    $( "#my-widget1" ).colorize();
- 
-    // initialize with two customized options
-    $( "#my-widget2" ).colorize({
-      red: 60,
-      blue: 60
-    });
- 
-    // initialize with custom green value
-    // and a random callback to allow only colors with enough green
-    $( "#my-widget3" ).colorize( {
-      green: 128,
-      random: function( event, ui ) {
-        return ui.green > 128;
+   
       }
-    });
+  });
  
-    // click to toggle enabled/disabled
-    $( "#disable" ).click(function() {
-      // use the custom selector created for each widget to find all instances
-      // all instances are toggled together, so we can check the state from the first
-      if ( $( ":custom-colorize" ).colorize( "option", "disabled" ) ) {
-        $( ":custom-colorize" ).colorize( "enable" );
-      } else {
-        $( ":custom-colorize" ).colorize( "disable" );
-      }
-    });
- 
-    // click to set options after initialization
-    $( "#green" ).click( function() {
-      $( ":custom-colorize" ).colorize( "option", {
-        red: 64,
-        green: 250,
-        blue: 8
-      });
-    });
-
 })(window,Codepros);

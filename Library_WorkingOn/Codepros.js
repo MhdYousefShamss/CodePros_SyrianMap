@@ -2,35 +2,37 @@
 
 	var Codepros=(function(){
 		//Constructor
-		function Codepros(element,mapOption){
+		function Codepros( element,mapOption ){
 			this.gMap = new google.maps.Map(element,mapOption);
 			this.markers=list.Create();
 			//Remember To Provide a Style for a Cluterer
 			//Cuz it Needs a VPN Connection to get the default.
-			this.markerClusterer = new MarkerClusterer(this.gMap , []);
+			if(mapOption.markerClusterer){
+				this.markerClusterer = new MarkerClusterer(this.gMap , []);	
+			}
 			if(mapOption.geocoder){
 				this.geocoder = new google.maps.Geocoder();
 			}
 		}
 		Codepros.prototype={
-			Zoom:function(zoomLevel){
+			Zoom:function( zoomLevel ){
 				if(zoomLevel){
 					this.gMap.setZoom(zoomLevel);
 				} else {
 					return this.gMap.getZoom();
 				}
 			},
-			Center:function(LatLng){
+			Center:function( LatLng ){
 				if(LatLng){
 					this.gMap.setCenter(LatLng);
 				} else {
 					return this.gMap.getCenter();
 				}
 			},
-			_on:function(options){
+			_on:function( options ){
 				google.maps.event.addListener(options.obj,options.event,options.callback);
 			},
-			CreateMarker:function(options){
+			CreateMarker:function( options ){
 				var marker;
 				//Error While Calling Need To Fix
 				//Pass it to jQueryUI
@@ -111,9 +113,9 @@
 					marker.setMap(null);
 				}
 			},
-			Geocode:function(geoCoderOptions){
+			Geocode:function( geoCoderOptions ){
 				this.geocoder.geocode({
-					address : geoCoderOptions.address,
+					address : geoCoderOptions.location,
 				},function(results,status){
 					if(status === google.maps.GeocoderStatus.OK){
 						geoCoderOptions.success.call(this,results,status);
@@ -122,10 +124,10 @@
 					}
 				})
 			},
-			FindBy:function(callback){
+			FindBy:function( callback ){
 				return this.markers.find(callback);
 			},
-			RemoveBy:function(callback,action){
+			RemoveBy:function( callback,action ){
 				var self = this;
 				return self.markers.find(callback,function(markers){
 					markers.forEach(function(marker){
@@ -137,7 +139,7 @@
 					});
 				})
 			},
-			GetDirections:function(directionOption){
+			GetDirections:function( directionOption ){
 				switch(directionOption.travelMode){
 					case 'driving':
 					directionOption.travelMode = google.maps.TravelMode.DRIVING;
@@ -173,7 +175,7 @@
 		};
 		return Codepros;
 	})();
-	Codepros.CreateNew=function(element,mapOption){
+	Codepros.CreateNew=function( element,mapOption ){
 		return new Codepros(element,mapOption);
 	}
 	window.Codepros=Codepros;

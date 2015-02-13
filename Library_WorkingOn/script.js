@@ -1,34 +1,32 @@
-(function(window,Codepros){
+(function(window,$){
 
-	var mapOption={
+	
+	var myMap = $('#container').codepros({
 		center:new google.maps.LatLng(33,33),
-		zoom:7,
-		geocoder:true
-	};
-	var element=document.getElementById("container");
-	var myMap=Codepros.CreateNew(element,mapOption);
-	var marker = myMap.CreateMarker({
+		zoom:9
+	});
+	myMap.codepros('addMarker',{
 		lat:33,
 		lng:33,
-		id:2,
-		draggable:true,
-		content:"Hello"
-		/*event:{
-			name:"click",
-			callback:function(){
-				myInfo.open(myMap.gMap,marker);
-			}
-		}*/
-		//icon:'http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-128e4d/shapecolor-color/shadow-1/border-dark/symbolstyle-white/symbolshadowstyle-dark/gradient-no/moose.png'
+		content:'hello'
 	});
-	/*myMap.AddInfoWindow("<div style='color:red;'>Hello</div>",myMap.CreateMarker({
-		lat:33,
-		lng:32,
-		id:1
-	}));*/
-	var marker2=myMap.CreateMarker({
-		lat:33,
-		lng:32,
-		id:1
+	myMap.codepros('addMarker',{
+		lat:33.1,
+		lng:33.1,
+		content:'hello b5she'
+	})
+	myMap.codepros('addMarker',{
+		location:'damascus'
 	});
-})(window,window.Codepros)
+	/*var matches = myMap.codepros('removeMarkers',function(marker){
+		return marker.lat===33;
+	})
+	console.log(matches);
+	var currentzoom = myMap.codepros('Zoom');
+	console.log(currentzoom);
+	var markers = myMap.codepros('getAllMarkers');
+	console.log(markers);
+	myMap.codepros('addMarker',{
+		location:'damascus'
+	});*/
+})(window,jQuery)
