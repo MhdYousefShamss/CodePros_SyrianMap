@@ -1,32 +1,62 @@
-(function(window,$){
+(function(window,Codepros){
 
-	
-	var myMap = $('#container').codepros({
-		center:new google.maps.LatLng(33,33),
-		zoom:9
+	var myMap = Codepros.CreateNew(document.getElementById("container"),{
+		center: new google.maps.LatLng(33,36),
+		zoom:7,
+		geocoder:true
 	});
-	myMap.codepros('addMarker',{
-		lat:33,
+	var marker = myMap.CreateMarker({
+		lat:33.1,
 		lng:33,
-		content:'hello'
+		id:1,
+		content:"hello",
+		draggable:true,
+		event:{
+			name:'dragend',
+			callback:function(){
+				alert("teze");
+			}
+		}
 	});
-	myMap.codepros('addMarker',{
+	var marker1 = myMap.CreateMarker({
 		lat:33.1,
 		lng:33.1,
-		content:'hello b5she'
-	})
-	myMap.codepros('addMarker',{
-		location:'damascus'
+		content:"hello1",
+		draggable:true,
+		event:{
+			name:'dragend',
+			callback:function(){
+				alert("teze");
+			}
+		}
 	});
-	/*var matches = myMap.codepros('removeMarkers',function(marker){
-		return marker.lat===33;
-	})
-	console.log(matches);
-	var currentzoom = myMap.codepros('Zoom');
-	console.log(currentzoom);
-	var markers = myMap.codepros('getAllMarkers');
-	console.log(markers);
-	myMap.codepros('addMarker',{
-		location:'damascus'
+	/*myMap.GetDirections({
+		start:132,
+		end:123,
+		travelMode:'walking'
 	});*/
-})(window,jQuery)
+	/*var matches = myMap.FindBy(function(marker){
+		return marker.id === 1;
+	});
+	//console.log(matches);
+	myMap.RemoveBy(function(marker){
+		return marker.id === 1;
+	});*/
+	/*myMap.Geocode({
+		location:"Damascus",
+		success: function(results){
+			console.log(results);
+		},
+		error: function(){
+			console.log("5ra");
+		}
+	});*/
+	/*myMap.GetCurrentPosition(function(position){
+		myMap.CreateMarker({
+			lat:position.coords.latitude,
+			lng:position.coords.longitude
+		})
+	});*/
+	myMap.MarkCurrentPosition();
+
+})(window,window.Codepros)

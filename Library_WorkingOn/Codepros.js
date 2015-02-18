@@ -46,6 +46,7 @@
 									lng : result.geometry.location.lng()
 								}
 								marker = this._AddMarker(options);
+								console.log(marker);
 							})
 							alert("Done");
 						},
@@ -155,9 +156,9 @@
 				if(directionOption.panel){
 					directionsDisplay.setPanel(document.getElementById(directionOption.panel));
 				}
-				bounds.extend(directionOption.start);
-				bounds.extend(directionOption.end);
-				this.gMap.fitBounds(bounds);
+				//bounds.extend(directionOption.start);
+				//bounds.extend(directionOption.end);
+				//this.gMap.fitBounds(bounds);
 				var request = {
 					origin : directionOption.start,
 					destination : directionOption.end,
@@ -166,11 +167,30 @@
 				directionsService.route(request,function(response,status){
 					if(status == google.maps.DirectionsStatus.OK){
 						directionsDisplay.setDirections(response);
-						directionsDisplay.setMap(this.gMap);
 					} else {
 						alert("not OK");
 					}
 				});
+			},
+			GetCurrentPosition:function( callback ) {
+				var self = this;
+				if(navigator.geolocation){
+					navigator.geolocation.getCurrentPosition(function(position){
+						console.log(self);
+						callback.call(self,position);
+					});
+				}
+			},
+			MarkCurrentPosition:function(){
+				this.GetCurrentPosition(function(position){
+					var objPosition = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+					this.Center(objPosition);
+					this.Zoom(16);
+					this.CreateMarker({
+						lat:objPosition.lat(),
+						lng:objPosition.lng()
+					});
+				})
 			}
 		};
 		return Codepros;

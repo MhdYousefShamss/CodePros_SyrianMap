@@ -25,6 +25,7 @@
         var self = this;
         console.log()
         if(opts.location){
+          //Sending Null
           this.map.Geocode({
             address : opts.location,
             success:function(results){
