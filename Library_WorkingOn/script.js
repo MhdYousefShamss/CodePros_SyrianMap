@@ -5,7 +5,11 @@
 		zoom:7,
 		geocoder:true
 	});
-	var marker = myMap.CreateMarker({
+	var input = document.getElementById("text-field");
+	//myMap.gMap.controls[google.maps.ControlPosition.TOP].push(input);
+	myMap.PushControl(input,'top');
+	myMap.AutoComplete(input);
+	/*var marker = myMap.CreateMarker({
 		lat:33.1,
 		lng:33,
 		id:1,
@@ -29,7 +33,7 @@
 				alert("teze");
 			}
 		}
-	});
+	});*/
 	/*myMap.GetDirections({
 		start:132,
 		end:123,
