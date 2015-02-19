@@ -176,13 +176,16 @@
 				var self = this;
 				if(navigator.geolocation){
 					navigator.geolocation.getCurrentPosition(function(position){
-						console.log(self);
+						//Self = Codepros
+						//'this' in getCurrentPosition refers to navigator
+						//console.log(self);
 						callback.call(self,position);
 					});
 				}
 			},
 			MarkCurrentPosition:function(){
 				this.GetCurrentPosition(function(position){
+					//console.dir(position);
 					var objPosition = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 					this.Center(objPosition);
 					this.Zoom(16);
