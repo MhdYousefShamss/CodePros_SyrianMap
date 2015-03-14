@@ -205,7 +205,9 @@
 			},
 			AutoComplete:function( element ){
 				var self = this;
-				var autoComplete = new google.maps.places.Autocomplete(element);
+				var autoComplete = new google.maps.places.Autocomplete(element,{
+					componentRestrictions: {country: 'sy'}
+				});
 				autoComplete.bindTo('bounds',this.gMap);
 
 				var infoWindow = new google.maps.InfoWindow(),

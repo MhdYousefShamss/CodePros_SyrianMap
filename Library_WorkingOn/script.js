@@ -9,6 +9,11 @@
 	//myMap.gMap.controls[google.maps.ControlPosition.TOP].push(input);
 	myMap.PushControl(input,'top');
 	myMap.AutoComplete(input);
+	myMap.GetDirections({
+		start:new google.maps.LatLng(13.687140112679154, 100.53525868803263),
+		end:new google.maps.LatLng(13.683660045847258, 100.53900808095932),
+		travelMode:"walking"
+	});
 	/*var marker = myMap.CreateMarker({
 		lat:33.1,
 		lng:33,
